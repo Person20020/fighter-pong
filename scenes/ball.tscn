@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://0fherjkfgi35"]
+
+[ext_resource type="Texture2D" uid="uid://dsxswbntpbydf" path="res://assets/pixelated-dot.png" id="1_x8fbi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41u45"]
+radius = 4.1231055
+
+[node name="Ball" type="AnimatableBody2D"]
+z_index = -1
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_41u45")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_x8fbi")

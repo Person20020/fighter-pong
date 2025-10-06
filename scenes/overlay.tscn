@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://coe4uoifvre8d"]
+
+[ext_resource type="Script" uid="uid://cjpwygwdi0eg8" path="res://scripts/overlay.gd" id="1_r2eog"]
+[ext_resource type="Texture2D" uid="uid://bptxeol1fnss1" path="res://assets/hearts.png" id="2_sfd0e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2eog"]
+atlas = ExtResource("2_sfd0e")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5j10"]
+atlas = ExtResource("2_sfd0e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfd0e"]
+atlas = ExtResource("2_sfd0e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0miq5"]
+atlas = ExtResource("2_sfd0e")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Overlay" type="CanvasLayer"]
+script = ExtResource("1_r2eog")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 22.0
+offset_top = 54.0
+offset_right = 83.0
+offset_bottom = 81.0
+text = "Player"
+
+[node name="HealthContainer" type="Node2D" parent="."]
+
+[node name="Heart1" type="Node2D" parent="HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="HealthContainer/Heart1"]
+position = Vector2(30, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="HealthContainer/Heart1"]
+position = Vector2(30, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_p5j10")
+
+[node name="Heart2" type="Node2D" parent="HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="HealthContainer/Heart2"]
+position = Vector2(75, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="HealthContainer/Heart2"]
+position = Vector2(75, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_sfd0e")
+
+[node name="Heart3" type="Node2D" parent="HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="HealthContainer/Heart3"]
+position = Vector2(120, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="HealthContainer/Heart3"]
+position = Vector2(120, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_0miq5")
