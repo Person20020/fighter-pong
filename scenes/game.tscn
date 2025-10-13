@@ -1,12 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://42c5kj5ugok3"]
+[gd_scene load_steps=15 format=3 uid="uid://42c5kj5ugok3"]
 
-[ext_resource type="Script" uid="uid://bn3674jpe8xjb" path="res://scripts/health.gd" id="1_kvpfn"]
+[ext_resource type="Script" uid="uid://bn3674jpe8xjb" path="res://scripts/game.gd" id="1_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://3yt61a2cyfoo" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://coe4uoifvre8d" path="res://scenes/overlay.tscn" id="1_vtaks"]
 [ext_resource type="PackedScene" uid="uid://0fherjkfgi35" path="res://scenes/ball.tscn" id="3_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://d2wrdor8p1et5" path="res://assets/CaveTiles/RockTileSheet.png" id="4_iywne"]
 [ext_resource type="PackedScene" uid="uid://dkvb3v1ppn8y4" path="res://scenes/paddle.tscn" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://cvthcic2io38w" path="res://scenes/coin.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://b03ato0v8xxj2" path="res://scenes/world_border.tscn" id="6_p57ef"]
 [ext_resource type="Texture2D" uid="uid://dtbljyo4n7uya" path="res://assets/Background/Bright/bg.png" id="7_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://d3ufef1jbxstr" path="res://assets/Background/Pale/rock1.png" id="8_vtaks"]
@@ -96,7 +95,7 @@ position = Vector2(0, -40)
 [node name="Ball" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(-355, 0)
 
-[node name="LeftPaddle" parent="." instance=ExtResource("4_lbhrr")]
+[node name="LeftPaddle" parent="." groups=["paddles"] instance=ExtResource("4_lbhrr")]
 position = Vector2(-370, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -110,7 +109,7 @@ limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
-[node name="RightPadlle" parent="." instance=ExtResource("4_lbhrr")]
+[node name="RightPadlle" parent="." groups=["paddles"] instance=ExtResource("4_lbhrr")]
 position = Vector2(370, 0)
 rotation = 3.1415927
 
@@ -124,46 +123,6 @@ layer_0/tile_data = PackedInt32Array(196605, 5, 2, 196606, 524293, 0, 262142, 39
 layer_1/name = "Background"
 
 [node name="Coins" type="Node" parent="."]
-
-[node name="Coin" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(187, 61)
-metadata/_edit_group_ = true
-
-[node name="Coin10" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(-133, -119)
-metadata/_edit_group_ = true
-
-[node name="Coin3" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(-246, -11)
-metadata/_edit_group_ = true
-
-[node name="Coin4" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(122, -72)
-metadata/_edit_group_ = true
-
-[node name="Coin5" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(232, -57)
-metadata/_edit_group_ = true
-
-[node name="Coin6" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(180, -101)
-metadata/_edit_group_ = true
-
-[node name="Coin7" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(46, 47)
-metadata/_edit_group_ = true
-
-[node name="Coin8" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(97, 109)
-metadata/_edit_group_ = true
-
-[node name="Coin9" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(-146, 80)
-metadata/_edit_group_ = true
-
-[node name="Coin2" parent="Coins" instance=ExtResource("5_iywne")]
-position = Vector2(-3, -28)
-metadata/_edit_group_ = true
 
 [node name="Borders" type="Node" parent="."]
 

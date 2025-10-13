@@ -1,0 +1,105 @@
+[gd_scene load_steps=6 format=3 uid="uid://dt6yd5w61k1it"]
+
+[ext_resource type="Script" uid="uid://vev6dgrk4s6f" path="res://scripts/game_over_screen.gd" id="1_iwahs"]
+[ext_resource type="Texture2D" uid="uid://croom5gkaeyvk" path="res://assets/bsod.png" id="2_61w2s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwahs"]
+size = Vector2(176, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_61w2s"]
+size = Vector2(176, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jw6e5"]
+atlas = ExtResource("2_61w2s")
+
+[node name="GameOverScreen" type="CanvasLayer"]
+script = ExtResource("1_iwahs")
+
+[node name="RetryButton" type="Area2D" parent="."]
+z_index = 20
+position = Vector2(256, 352)
+
+[node name="RetryButtonColor" type="ColorRect" parent="RetryButton"]
+offset_right = 176.0
+offset_bottom = 48.0
+color = Color(0.3019608, 0.3019608, 0.3019608, 1)
+
+[node name="Text" type="RichTextLabel" parent="RetryButton/RetryButtonColor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Retry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RetryButton"]
+position = Vector2(88, 24)
+shape = SubResource("RectangleShape2D_iwahs")
+
+[node name="QuitButton" type="Area2D" parent="."]
+z_index = 20
+position = Vector2(720, 352)
+
+[node name="QuitButtonColor" type="ColorRect" parent="QuitButton"]
+offset_right = 176.0
+offset_bottom = 48.0
+color = Color(0.3019608, 0.3019608, 0.3019608, 1)
+
+[node name="Text" type="RichTextLabel" parent="QuitButton/QuitButtonColor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="QuitButton"]
+position = Vector2(88, 24)
+shape = SubResource("RectangleShape2D_61w2s")
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = 19
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.15649328, 0.28307688, 0.5696522, 1)
+
+[node name="GameOverText" type="RichTextLabel" parent="."]
+z_index = 20
+offset_left = 448.0
+offset_top = 184.0
+offset_right = 704.0
+offset_bottom = 256.0
+text = "Game Over
+Do you want to try again?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WindowsText" type="RichTextLabel" parent="."]
+visible = false
+z_index = 20
+offset_left = 448.0
+offset_top = 96.0
+offset_right = 704.0
+offset_bottom = 168.0
+text = "Windows isn't at fault for once
+lol"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BSOD" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(576, 324.00003)
+scale = Vector2(0.6, 0.6000001)
+texture = SubResource("AtlasTexture_jw6e5")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="mouse_entered" from="RetryButton" to="." method="_on_retry_button_mouse_entered"]
+[connection signal="mouse_exited" from="RetryButton" to="." method="_on_retry_button_mouse_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

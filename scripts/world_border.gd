@@ -23,7 +23,7 @@ func _on_body_entered(body: Node2D) -> void:
 	
 	# Reduce lives by 1
 	if PLAYER_LAYER in collided_object_layers:
-		print("died")
+		print("took_damage")
 		emit_signal("took_damage")
 		
 		if overlay.current_hearts <= 0:
@@ -31,13 +31,14 @@ func _on_body_entered(body: Node2D) -> void:
 			timer.start(3)
 			return
 		
-		timer.start(.25)
+		timer.start(.35)
 
 
 func _on_timer_timeout() -> void:
 	# Check timer reason
 	# Player lost all lives
 	if lost:
+		# play the end scene
 		get_tree().reload_current_scene()
 	# Player lost a single life but hasn't fully lost yet
 	else:
