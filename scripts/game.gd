@@ -8,6 +8,8 @@ const REQUIRE_UNIQUE_COIN_POS:bool = true
 @onready var coin_spawn_points = get_tree().root.get_node("Game/CoinSpawnPoints").get_children()
 @onready var last_coin_spawn = Time.get_ticks_msec()
 
+@onready var beep_player = $BeepPlayer
+
 var coin_spawn_points_pos = []
 var next_coin_id = 0
 
@@ -65,5 +67,71 @@ func spawn_coin() -> void:
 	coin_instance.connect("player_collect_coin", overlay.add_coin)
 
 
-func play_sound(type: String) -> void:
-	pass
+func play_sound(type: String = "wall") -> void :
+	var generator = AudioStreamGenerator.new()
+	generator.mix_rate = 44100
+	beep_player.stream = generator
+	beep_player.play()
+	
+	var tones = {"c": 261.63, "d": 293.66, "e": 329.63, "f": 349.23, "g": 392.0, "a": 440.0, "b": 493.88, "c2": 523.25}
+	
+	var playback = beep_player.get_stream_playback()
+	var frequencies = []
+	var tone_durations = [] # In sec
+	var delay_between_tones = 0.2 # In sec
+	var default_tone_length = 0.15
+	
+	# Define the tones and durations in the if statements and then play through them after 
+	if type == "wall":
+		frequencies = [tones["a"]]
+		tone_durations = [0.15]
+			
+	elif type == "paddle":
+		frequencies = [tones["c"]]
+		tone_durations = [0.15]
+		pass
+	
+	elif type == "coin":
+		# b + g
+		frequencies = [tones["b"], tones["g"]]
+		tone_durations = [0.15, 0.15]
+		pass
+	
+	elif type == "hit_player":
+		# c2 + a
+		frequencies = [tones["c2"], tones["a"]]
+		tone_durations = [0.15, 0.15]
+	
+	elif type == "sweep":
+		# Sweep through defined notes
+		frequencies = [tones["c"], tones["d"], tones["e"], tones["f"], tones["g"], tones["a"], tones["b"], tones["c2"]]
+		for i in range(len(frequencies)):
+			tone_durations.append(0.15)
+		delay_between_tones = 0.5
+	
+	else:
+		pass
+	
+	# If tone_durations is empty then use default length
+	if len(tone_durations) == 0:
+		for i in range(len(frequencies)):
+			tone_durations.append(default_tone_length)
+	# Play the defined sounds
+	for i in range(len(frequencies)):
+		if i != 0: # Delay between tones
+			await delay(delay_between_tones)
+		
+		var samples = int(generator.mix_rate * tone_durations[i])
+		for j in range(samples):
+			var t = j / generator.mix_rate
+			if fmod(t * frequencies[i], 1.0) < 0.5:
+				var value = 0.5
+				playback.push_frame(Vector2(value, value))
+			else:
+				var value = -0.5
+				playback.push_frame(Vector2(value, value))
+		
+
+
+func delay(time: float = 1) -> void:
+	await get_tree().create_timer(time).timeout

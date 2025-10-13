@@ -39,3 +39,20 @@ func _on_body_entered(body: Node2D) -> void:
 			emit_signal("ball_collect_coin")
 	
 		queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	var collided_object_bitmask = area.collision_layer
+	var collided_object_layers = []
+	
+	for i in range(1, 33):
+		if collided_object_bitmask & (1 << (i - 1)):
+			print(" - On layer", i)
+			collided_object_layers.append(i)
+		
+	if BALL_LAYER in collided_object_layers:
+		print("Ball collided with coin")
+		emit_signal("ball_collect_coin")
+
+	queue_free()
+	pass # Replace with function body.

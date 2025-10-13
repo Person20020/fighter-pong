@@ -85,6 +85,7 @@ sources/5 = SubResource("TileSetAtlasSource_p57ef")
 distance = 11.0
 
 [node name="Game" type="Node2D"]
+position = Vector2(384, 216)
 script = ExtResource("1_kvpfn")
 
 [node name="Overlay" parent="." instance=ExtResource("1_vtaks")]
@@ -127,27 +128,27 @@ layer_1/name = "Background"
 [node name="Borders" type="Node" parent="."]
 
 [node name="WorldBorder" parent="Borders" instance=ExtResource("6_p57ef")]
-position = Vector2(0, 155)
+position = Vector2(384, 371)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WorldBorder"]
 shape = SubResource("WorldBoundaryShape2D_u5sy4")
 
 [node name="WorldBorder2" parent="Borders" instance=ExtResource("6_p57ef")]
-position = Vector2(-350, 0)
+position = Vector2(34, 216)
 rotation = 1.5707964
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WorldBorder2"]
 shape = SubResource("WorldBoundaryShape2D_u5sy4")
 
 [node name="WorldBorder3" parent="Borders" instance=ExtResource("6_p57ef")]
-position = Vector2(350, 0)
+position = Vector2(734, 216)
 rotation = -1.5707964
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WorldBorder3"]
 shape = SubResource("WorldBoundaryShape2D_u5sy4")
 
 [node name="WorldBottom" type="StaticBody2D" parent="Borders"]
-position = Vector2(0, 300)
+position = Vector2(384, 516)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WorldBottom"]
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
@@ -156,18 +157,19 @@ shape = SubResource("WorldBoundaryShape2D_uwrxv")
 
 [node name="Background" type="Sprite2D" parent="Background"]
 z_index = -10
+position = Vector2(384, 215.98)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_0tnpc")
 
 [node name="Bottom" type="Sprite2D" parent="Background"]
 z_index = -9
-position = Vector2(0, 49.705)
+position = Vector2(384, 267.685)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("8_vtaks")
 
 [node name="Top" type="Sprite2D" parent="Background"]
 z_index = -8
-position = Vector2(0, -17.98)
+position = Vector2(384, 200)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("9_kvpfn")
 
@@ -177,40 +179,42 @@ position = Vector2(0, -25)
 [node name="CoinSpawnPoints" type="Node" parent="."]
 
 [node name="CoinSpawnPoint1" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-135, -50)
+position = Vector2(249, 166)
 
 [node name="CoinSpawnPoint2" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-240, -5)
+position = Vector2(144, 211)
 
 [node name="CoinSpawnPoint3" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-202.5, 55)
+position = Vector2(181.5, 271)
 
 [node name="CoinSpawnPoint4" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-110, 25)
+position = Vector2(274, 241)
 
 [node name="CoinSpawnPoint5" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(1, -18)
+position = Vector2(385, 198)
 
 [node name="CoinSpawnPoint6" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-140, 85)
+position = Vector2(244, 301)
 
 [node name="CoinSpawnPoint7" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(-50, 70)
+position = Vector2(334, 286)
 
 [node name="CoinSpawnPoint8" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(45, 55)
+position = Vector2(429, 271)
 
 [node name="CoinSpawnPoint9" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(90, 115)
+position = Vector2(474, 331)
 
 [node name="CoinSpawnPoint10" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(160, 70)
+position = Vector2(544, 286)
 
 [node name="CoinSpawnPoint11" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(190, -5)
+position = Vector2(574, 211)
 
 [node name="CoinSpawnPoint12" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(235, -50)
+position = Vector2(619, 166)
 
 [node name="CoinSpawnPoint13" type="Node2D" parent="CoinSpawnPoints"]
-position = Vector2(122, -65)
+position = Vector2(506, 151)
+
+[node name="BeepPlayer" type="AudioStreamPlayer2D" parent="."]

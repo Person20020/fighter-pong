@@ -7,13 +7,28 @@ var velocity := Vector2.ZERO
 
 signal ball_collect_coin
 
-@onready var beep_player = $BeepPlayer
+#@onready var beep_player = $BeepPlayer
 @onready var paddle_sprite = get_tree().get_first_node_in_group("paddles").get_node("Sprite2D")
 @onready var paddle_height = paddle_sprite.texture.get_height() * paddle_sprite.scale.y
 
+@onready var game = get_tree().root.get_node("Game")
+
+var camera
+var zoom
+var screen_size
+var top_left
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	camera = get_viewport().get_camera_2d()
+	zoom = camera.zoom
+	screen_size = get_viewport_rect().size / zoom
+	top_left = camera.get_screen_center_position() - (screen_size / 2)
+	
+	# Set the ball to starting position
+	position.x = -350
+	position.y = 0
+
 	# Starting velocity
 	var direction = Vector2(1, randf_range(0 - (START_MAX_ANGLE / 90), (START_MAX_ANGLE / 90))).normalized()
 	velocity = direction * SPEED
@@ -21,42 +36,48 @@ func _ready() -> void:
 	
 	# Test tone sweep
 	#play_beep("sweep")
-	print(paddle_height)
-
-	pass # Replace with function body.
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position += velocity * delta
-	if position.y < (0 - (get_viewport_rect().size.y / 2)) or position.y > (get_viewport_rect().size.y / 2):
-		velocity.y = -velocity.y
-		play_beep("wall")
-	if position.x < (0 - (get_viewport_rect().size.x / 2)) or position.x > (get_viewport_rect().size.x / 2):
-		velocity.x = -velocity.x
-		play_beep("wall")
+	# Bounce off top/bottom
+	if global_position.y <= top_left.y:
+		velocity.y = abs(velocity.y)
+		game.play_sound("wall")
+	if global_position.y >= (top_left.y + screen_size.y):
+		velocity.y = -abs(velocity.y)
+		game.play_sound("wall")
 	
-	#print(position)
+	# Bounce off of sides
+	if global_position.x <= top_left.x:
+		velocity.x = abs(velocity.x)
+		game.play_sound("wall")
+	if global_position.x >= (top_left.x + screen_size.x):
+		velocity.x = -abs(velocity.x)
+		game.play_sound("wall")
+	
 
 
 func _on_body_entered(body: Node2D) -> void:
 	# Player
 	if body.name == "Player":
-		play_beep("hit_player")
+		game.play_sound("hit_player")
 
 
 func _on_area_entered(area: Area2D) -> void:
 	# Paddles
 	if area.is_in_group("paddles"):
 		velocity.x = -velocity.x
-		play_beep("paddle")
+		game.play_sound("paddle")
 	
 	if area.is_in_group("coins"):
-		play_beep("coin")
+		game.play_sound("coin")
 		print("coin")
 		emit_signal("ball_collect_coin")
 
 
+"""
 func play_beep(type: String = "wall") -> void :
 	var generator = AudioStreamGenerator.new()
 	generator.mix_rate = 44100
@@ -125,3 +146,4 @@ func play_beep(type: String = "wall") -> void :
 
 func delay(time: float = 1) -> void:
 	await get_tree().create_timer(time).timeout
+"""
