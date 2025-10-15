@@ -6,6 +6,8 @@ const BALL_LAYER = 3
 signal player_collect_coin
 signal ball_collect_coin
 
+@onready var game = get_tree().root.get_node("Game")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,11 +34,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if PLAYER_LAYER in collided_object_layers:
 			print("Player collided with coin")
 			emit_signal("player_collect_coin")
-			
-			
-		elif BALL_LAYER in collided_object_layers:
-			print("Ball collided with coin")
-			emit_signal("ball_collect_coin")
+			game.play_sound("coin")
 	
 		queue_free()
 
@@ -53,6 +51,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if BALL_LAYER in collided_object_layers:
 		print("Ball collided with coin")
 		emit_signal("ball_collect_coin")
+		game.play_sound("coin")
 
 	queue_free()
-	pass # Replace with function body.

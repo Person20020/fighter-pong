@@ -26,12 +26,14 @@ region = Rect2(0, 0, 16, 16)
 
 [node name="Overlay" type="CanvasLayer"]
 script = ExtResource("1_r2eog")
+PLAYER_ABILITY_COST = 5
+PONG_ABILITY_COST = 5
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 22.0
-offset_top = 54.0
-offset_right = 83.0
-offset_bottom = 81.0
+offset_left = 17.0
+offset_top = 41.0
+offset_right = 78.0
+offset_bottom = 68.0
 text = "Player"
 
 [node name="HealthContainer" type="Node2D" parent="."]
@@ -73,7 +75,7 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_0miq5")
 
 [node name="CoinContainer" type="Node2D" parent="."]
-position = Vector2(700, 0)
+position = Vector2(250, 7)
 
 [node name="CoinIcon" type="Sprite2D" parent="CoinContainer"]
 position = Vector2(-16, 16)
@@ -89,11 +91,84 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="PlayerActivateAbility" type="RichTextLabel" parent="."]
+offset_left = 150.0
+offset_top = 40.0
+offset_right = 273.0
+offset_bottom = 93.0
+text = "Press 'E' to activate ability"
+
 [node name="PongContainer" type="Node2D" parent="."]
-position = Vector2(1000, 0)
+position = Vector2(900, 0)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PongContainer"]
-offset_right = 127.0
-offset_bottom = 40.0
-text = "Time Left: 0:00"
+offset_left = 16.0
+offset_top = 40.0
+offset_right = 61.0
+offset_bottom = 67.0
+text = "Pong
+"
 fit_content = true
+
+[node name="HealthContainer" type="Node2D" parent="PongContainer"]
+
+[node name="Heart1" type="Node2D" parent="PongContainer/HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="PongContainer/HealthContainer/Heart1"]
+position = Vector2(30, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="PongContainer/HealthContainer/Heart1"]
+position = Vector2(30, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_p5j10")
+
+[node name="Heart2" type="Node2D" parent="PongContainer/HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="PongContainer/HealthContainer/Heart2"]
+position = Vector2(75, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="PongContainer/HealthContainer/Heart2"]
+position = Vector2(75, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_sfd0e")
+
+[node name="Heart3" type="Node2D" parent="PongContainer/HealthContainer"]
+
+[node name="HealthEmpty" type="Sprite2D" parent="PongContainer/HealthContainer/Heart3"]
+position = Vector2(120, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_r2eog")
+
+[node name="Health" type="Sprite2D" parent="PongContainer/HealthContainer/Heart3"]
+position = Vector2(120, 25)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_0miq5")
+
+[node name="CoinContainer" type="Node2D" parent="PongContainer"]
+position = Vector2(250, 7)
+
+[node name="CoinIcon" type="Sprite2D" parent="PongContainer/CoinContainer"]
+position = Vector2(-16, 16)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_nx175")
+
+[node name="CoinCount" type="RichTextLabel" parent="PongContainer/CoinContainer"]
+offset_left = -141.0
+offset_top = 2.0
+offset_right = -34.0
+offset_bottom = 31.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PongActivateAbility" type="RichTextLabel" parent="PongContainer"]
+offset_left = 106.0
+offset_top = 43.0
+offset_right = 258.0
+offset_bottom = 93.0
+text = "Use Right Click to activate ability"

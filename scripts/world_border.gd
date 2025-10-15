@@ -26,7 +26,7 @@ func _on_body_entered(body: Node2D) -> void:
 		print("took_damage")
 		emit_signal("took_damage")
 		
-		if overlay.current_hearts <= 0:
+		if overlay.player_current_hearts <= 0:
 			lost = true
 			timer.start(3)
 			return

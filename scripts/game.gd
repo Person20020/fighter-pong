@@ -65,6 +65,7 @@ func spawn_coin() -> void:
 	# Connect signals from the coin to a function in the overlay
 	var overlay = get_tree().root.get_node("Game/Overlay")
 	coin_instance.connect("player_collect_coin", overlay.add_coin)
+	coin_instance.connect("ball_collect_coin", Callable(overlay, "add_coin").bind(1, false))
 
 
 func play_sound(type: String = "wall") -> void :

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 220.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -350.0
 const DAMPENING_PERCENT = 0.3
 const MIN_VELOCITY = 1
 const VELOCITY_INCREASE = .1

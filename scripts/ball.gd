@@ -2,13 +2,16 @@ extends Area2D
 
 @export var SPEED := 350.0
 @export var START_MAX_ANGLE := 22.5 # Max randomized starting angle. 1 is vertical 0 is horizontal
+@export var BOUNCE_ANGLE_REDUCTION := 0.5
+@export var BOUNCE_MARGIN = 50
 
 var velocity := Vector2.ZERO
 
-signal ball_collect_coin
+signal hit_player
+signal pong_died
 
-#@onready var beep_player = $BeepPlayer
-@onready var paddle_sprite = get_tree().get_first_node_in_group("paddles").get_node("Sprite2D")
+@onready var first_paddle = get_tree().get_first_node_in_group("paddles")
+@onready var paddle_sprite = first_paddle.get_node("Sprite2D")
 @onready var paddle_height = paddle_sprite.texture.get_height() * paddle_sprite.scale.y
 
 @onready var game = get_tree().root.get_node("Game")
@@ -49,20 +52,17 @@ func _process(delta: float) -> void:
 		velocity.y = -abs(velocity.y)
 		game.play_sound("wall")
 	
-	# Bounce off of sides
-	if global_position.x <= top_left.x:
-		velocity.x = abs(velocity.x)
-		game.play_sound("wall")
-	if global_position.x >= (top_left.x + screen_size.x):
-		velocity.x = -abs(velocity.x)
-		game.play_sound("wall")
-	
-
+	# Die when hitting sides
+	if global_position.x <= top_left.x - BOUNCE_MARGIN or global_position.x >= (top_left.x + screen_size.x + BOUNCE_MARGIN):
+		emit_signal("pong_died")
+		queue_free()
+		#game.play_sound("wall")
 
 func _on_body_entered(body: Node2D) -> void:
 	# Player
 	if body.name == "Player":
 		game.play_sound("hit_player")
+		emit_signal("hit_player")
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -70,80 +70,29 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("paddles"):
 		velocity.x = -velocity.x
 		game.play_sound("paddle")
+		
+		var ball_paddle_dist_y = global_position.y - area.global_position.y
+		var paddle_radius = 52.5
+		#var normalized = clamp(ball_paddle_dist_y / paddle_radius, -1, 1)
+		var theta = asin(clamp(ball_paddle_dist_y / paddle_radius, -1, 1))
+		var reduced_angle = theta * BOUNCE_ANGLE_REDUCTION
+		var _bounce_angle = theta * 2
+		
+		var normal
+		# Left paddle
+		if global_position.x < (screen_size.x / 2):
+			normal = Vector2(-1, sin(reduced_angle)).normalized() # Line across which the ball's trajectory will be mirrorerd
+		# Right paddle
+		else:
+			normal = Vector2(1, sin(reduced_angle)).normalized()
+		
+		velocity = velocity.bounce(normal).normalized() * SPEED
+		
+		velocity.x = -velocity.x
+		
+		position.x += sign(velocity.x) * 20
+		
 	
 	if area.is_in_group("coins"):
-		game.play_sound("coin")
+		# game.play_sound("coin")
 		print("coin")
-		emit_signal("ball_collect_coin")
-
-
-"""
-func play_beep(type: String = "wall") -> void :
-	var generator = AudioStreamGenerator.new()
-	generator.mix_rate = 44100
-	beep_player.stream = generator
-	beep_player.play()
-	
-	var tones = {"c": 261.63, "d": 293.66, "e": 329.63, "f": 349.23, "g": 392.0, "a": 440.0, "b": 493.88, "c2": 523.25}
-	
-	var playback = beep_player.get_stream_playback()
-	var frequencies = []
-	var tone_durations = [] # In sec
-	var delay_between_tones = 0.2 # In sec
-	var default_tone_length = 0.15
-	
-	# Define the tones and durations in the if statements and then play through them after 
-	if type == "wall":
-		frequencies = [tones["a"]]
-		tone_durations = [0.15]
-			
-	elif type == "paddle":
-		frequencies = [tones["c"]]
-		tone_durations = [0.15]
-		pass
-	
-	elif type == "coin":
-		# b + g
-		frequencies = [tones["b"], tones["g"]]
-		tone_durations = [0.15, 0.15]
-		pass
-	
-	elif type == "hit_player":
-		# c2 + a
-		frequencies = [tones["c2"], tones["a"]]
-		tone_durations = [0.15, 0.15]
-	
-	elif type == "sweep":
-		# Sweep through defined notes
-		frequencies = [tones["c"], tones["d"], tones["e"], tones["f"], tones["g"], tones["a"], tones["b"], tones["c2"]]
-		for i in range(len(frequencies)):
-			tone_durations.append(0.15)
-		delay_between_tones = 0.5
-	
-	else:
-		pass
-	
-	# If tone_durations is empty then use default length
-	if len(tone_durations) == 0:
-		for i in range(len(frequencies)):
-			tone_durations.append(default_tone_length)
-	# Play the defined sounds
-	for i in range(len(frequencies)):
-		if i != 0: # Delay between tones
-			await delay(delay_between_tones)
-		
-		var samples = int(generator.mix_rate * tone_durations[i])
-		for j in range(samples):
-			var t = j / generator.mix_rate
-			if fmod(t * frequencies[i], 1.0) < 0.5:
-				var value = 0.5
-				playback.push_frame(Vector2(value, value))
-			else:
-				var value = -0.5
-				playback.push_frame(Vector2(value, value))
-		
-
-
-func delay(time: float = 1) -> void:
-	await get_tree().create_timer(time).timeout
-"""
