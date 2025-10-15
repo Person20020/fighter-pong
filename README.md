@@ -1,6 +1,6 @@
 # fighter-pong
 
-<img width="1165" height="715" alt="2025-10-11-192800_hyprshot" src="https://github.com/user-attachments/assets/188819a7-5e63-47c3-89c3-3c442b005a2a" />
+<img width="1165" height="662" alt="2025-10-14-222138_hyprshot" src="https://github.com/user-attachments/assets/b98b8206-f249-4162-a520-660f3b8d9531" />
 
 
 
